@@ -42,16 +42,16 @@ The analysis uses the **"Movies on Netflix, Prime Video, Hulu and Disney+"** dat
 ### Maturity & Quality Distribution
 The bar charts and box plots below highlight the stark contrast in audience targeting and the slight edge Disney+ holds in critical reception.
 
-![Main Comparison](streaming_platforms_comparison.png)
+![Main Comparison](figures/streaming_platforms_comparison.png)
 
 ### Density Analysis
 The violin plots illustrate the "density" of content. Netflix has a heavy concentration of adult-oriented (18+) content, while Disney+ dominates the G-rated ("all") space.
 
-![Violin Plots](violin_plots_comparison.png)
+![Violin Plots](figures/violin_plots_comparison.png)
 
 ### Correlation Matrix
 Exploring the relationship between the year of release, maturity, and ratings.
-![Correlation Matrix](correlation_matrix.png)
+![Correlation Matrix](figures/correlation_matrix.png)
 
 ## 🚀 Getting Started
 
@@ -85,7 +85,4 @@ This project follows the strict guidelines of the **Department of Statistics at 
 *   Rigorous hypothesis testing assumptions.
 *   Neutral, scientific interpretation of results.
 
----
-**Author:** [Your Name]
-**Contact:** [Your Email/LinkedIn]
-**Date:** December 2024
+
