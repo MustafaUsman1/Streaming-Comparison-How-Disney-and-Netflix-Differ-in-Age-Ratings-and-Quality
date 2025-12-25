@@ -1,6 +1,3 @@
-This is a professional and visually engaging **README.md** designed for a GitHub repository. It reflects the high academic standard of your TU Dortmund application while showcasing your technical skills to potential recruiters or peers.
-
----
 
 # Streaming Platform Analysis: Disney+ vs. Netflix 🍿
 > **Master Data Science Application Project | TU Dortmund University**
