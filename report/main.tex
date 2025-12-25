@@ -1,0 +1,258 @@
+\documentclass[12pt,a4paper]{article}
+
+% --- Packages ---
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amsfonts, amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{setspace}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{caption}
+\usepackage{float}
+\usepackage[authoryear]{natbib}
+
+
+% --- Layout Settings (As per TU Dortmund Guidelines) ---
+\geometry{margin=2.5cm}
+\onehalfspacing
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1em}
+
+\begin{document}
+
+% ==============================================================================
+% TITLE PAGE (Does not count toward page limit)
+% ==============================================================================
+\begin{titlepage}
+    \centering
+    \vspace*{2cm}
+    {\huge \textbf{Application Report for Master of Science in Data Science}\par}
+    \vspace{1cm}
+    {\Large Summer Semester 2025\par}
+    \vspace{2cm}
+    {\Large \textbf{Comparative Analysis of Content Maturity and Quality: Disney+ vs. Netflix}\par}
+    \vspace{3cm}
+    {\large Prepared by: Mustafa Usman\par}
+    {\large Date: \today\par}
+    \vfill
+    {\large TU Dortmund University\\Department of Statistics\par}
+\end{titlepage}
+
+\newpage
+
+% ==============================================================================
+% TABLE OF CONTENTS (Does not count toward page limit)
+% ==============================================================================
+\tableofcontents
+\newpage
+
+% ==============================================================================
+% SECTION I: INTRODUCTION / MOTIVATION
+% ==============================================================================
+\section{Introduction}
+The global streaming landscape has transformed into a highly competitive environment, often referred to as the "Streaming Wars." As platforms vie for subscriber retention, their content libraries serve as the primary differentiator. This report investigates the prevailing market perceptions of two industry leaders: Disney+ and Netflix. While Disney+ is traditionally associated with family-friendly entertainment and the "Disney brand" of wholesome content, Netflix has established itself as a broad-spectrum provider catering to diverse, and often more mature, audiences \citet{ssrn5275594}.
+
+The objective of this analysis is to verify whether these reputations are supported by empirical data. Specifically, we investigate whether Disney+ maintains a significantly lower age restriction profile compared to Netflix, even after the acquisition of more mature franchises like Marvel and Star Wars. Furthermore, we examine content quality by comparing audience and critic reception via Rotten Tomatoes scores. By applying rigorous statistical methods to a large-scale dataset of movies, this report provides a quantitative basis for understanding platform positioning in the modern digital era \citet{shsconf2024}.
+
+The report is structured as follows: Section 2 describes the dataset and preprocessing steps; Section 3 defines the mathematical and statistical methods employed; Section 4 presents the descriptive and inferential evaluation; and Section 5 summarizes the findings and limitations.
+
+% ==============================================================================
+% SECTION II: DETAILED DESCRIPTION OF THE PROBLEM
+% ==============================================================================
+\section{Detailed Description of the Problem}
+The task involves comparing the content libraries of Disney+ and Netflix based on two primary metrics: maturity (Age Ratings) and quality (Rotten Tomatoes scores). 
+
+\subsection{Research Questions}
+1. Is the age restriction for movies on Disney+ significantly lower than for movies on Netflix? \\
+2. Is there a statistically significant difference in Rotten Tomatoes scores between the two platforms?
+
+\subsection{Data Source and Variables}
+The dataset is sourced from Kaggle ("Movies on Netflix, Prime Video, Hulu and Disney+"). It contains 9,515 observations. For this analysis, we focus on the following variables:
+\begin{itemize}
+    \item \textbf{Title}: The identifier for each movie.
+    \item \textbf{Age}: Categorical age rating (e.g., "7+", "13+", "18+", "all").
+    \item \textbf{Rotten Tomatoes}: A percentage-based quality score.
+    \item \textbf{Netflix / Disney+}: Binary flags (0/1) indicating platform availability.
+\end{itemize}
+
+\subsection{Data Preprocessing}
+To facilitate quantitative analysis, the following transformations were performed:
+\begin{itemize}
+    \item \textbf{Maturity Mapping}: The "Age" variable was converted into an ordinal numeric scale: "all" $\rightarrow 0$, "7+" $\rightarrow 7$, "13+" $\rightarrow 13$, "16+" $\rightarrow 16$, and "18+" $\rightarrow 18$.
+    \item \textbf{Quality Normalization}: Rotten Tomatoes scores were stripped of the "\%" or "/100" suffixes and converted to a numeric interval scale [0, 100].
+    \item \textbf{Handling Missingness}: Approximately 43.9\% of age data was missing. Analysis for Research Question 1 was conducted only on movies with available age ratings (725 for Disney+; 1,898 for Netflix).
+\end{itemize}
+
+% ==============================================================================
+% SECTION III: METHODS
+% ==============================================================================
+\section{Methods}
+This section describes the statistical tools used to analyze the data. Detailed formulas are provided in Appendix B.
+
+\subsection{Measures of Location and Dispersion}
+We summarize the central tendency and spread of the data using the mean, median, and standard deviation. For ordinal data like age ratings, the median is preferred because it is robust against outliers.
+
+\subsection{Shapiro-Wilk Test for Normality}
+Before inferential testing, we check whether the data are normally distributed using the Shapiro-Wilk test. A small $p$-value (typically $p<0.05$) indicates non-normality. 
+(For the exact formula, see Appendix C.1.)
+
+\subsection{Mann-Whitney U Test}
+Given the non-normal distribution and ordinal nature of age ratings, we use the Mann-Whitney U test to compare platforms. It evaluates whether one platform tends to have higher values than the other \citet{jstor2331554}.  
+(See Appendix C.2 for the calculation formula.)
+
+\subsection{Effect Size: Rank-Biserial Correlation}
+To quantify the magnitude of differences, the rank-biserial correlation ($r_{rb}$) is reported. Values closer to 1 or -1 indicate stronger effects.  
+(Detailed formula in Appendix C.3.)
+
+
+% ==============================================================================
+% SECTION IV: EVALUATION
+% ==============================================================================
+\section{Evaluation}
+
+\subsection{Descriptive Analysis}
+The dataset reveals a significant discrepancy in library sizes: Netflix hosts 3,695 movies, whereas Disney+ hosts 922. 
+
+\begin{table}[H]
+\centering
+\caption{Summary Statistics for Disney+ and Netflix}
+\label{tab:summary_stats}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Metric & Disney+ & Netflix \\ \midrule
+Total Movies & 922 & 3,695 \\
+Mean Age Rating & 4.10 & 13.54 \\
+Median Age Rating & 0.00 ("all") & 16.00 ("16+") \\
+Mean RT Score & 58.31 & 54.45 \\
+Median RT Score & 57.50 & 53.00 \\ \bottomrule
+\end{tabular}
+\end{table}
+
+The descriptive data in Table \ref{tab:summary_stats} suggests that Disney+ movies are targeted at a much younger audience, with a median rating of "all". Conversely, Netflix's median rating is "16+", confirming its focus on adult viewership. Interestingly, Disney+ maintains a higher average Rotten Tomatoes score (58.31) compared to Netflix (54.45).
+
+\subsection{Visual Comparison}
+Figure \ref{fig:comparison} illustrates the distribution of these variables. The left panel shows that Disney+'s age distribution is heavily skewed toward "all" and "7+", while Netflix shows a massive peak at "18+". The right panel demonstrates that while both platforms have a wide spread of quality, Disney+'s distribution is shifted slightly higher.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{streaming_platforms_comparison.png}
+    \caption{Distribution of Age Restrictions and Rotten Tomatoes Scores.}
+    \label{fig:comparison}
+\end{figure}
+
+\subsection{Inferential Analysis: Age Restriction}
+\textbf{Hypotheses:} \\
+$H_0$: Median age restriction on Disney+ $\geq$ Netflix. \\
+$H_1$: Median age restriction on Disney+ $<$ Netflix.
+
+The Shapiro-Wilk test yielded $p < 0.001$ for both groups, indicating non-normality. Consequently, the one-tailed Mann-Whitney U test was performed.
+\begin{itemize}
+    \item \textbf{Result}: $U = 166,350.5, p < 0.000001$.
+    \item \textbf{Effect Size}: $r_{rb} = 0.7582$.
+\end{itemize}
+The null hypothesis is rejected. There is strong statistical evidence that Disney+ content has significantly lower age restrictions than Netflix, with a very large effect size.
+
+\subsection{Inferential Analysis: Rotten Tomatoes Score}
+\textbf{Hypotheses:} \\
+$H_0$: No difference in median scores between platforms. \\
+$H_1$: There is a difference in median scores.
+
+The Mann-Whitney U test (two-tailed) was applied:
+\begin{itemize}
+    \item \textbf{Result}: $U = 1,984,865.0, p < 0.000001$.
+    \item \textbf{Effect Size}: $r_{rb} = -0.1675$.
+\end{itemize}
+The null hypothesis is rejected. Disney+ movies have statistically higher quality scores on average, though the effect size is small, indicating that while the difference is real, it is not as drastic as the maturity gap.
+
+% ==============================================================================
+% SECTION V: SUMMARY AND DISCUSSION
+% ==============================================================================
+\section{Summary and Discussion}
+This report set out to analyze the content profiles of Disney+ and Netflix. The statistical evaluation provides a clear answer to our research questions.
+
+First, Disney+ is indeed a platform characterized by lower maturity ratings. With a median age rating of 0 ("all") compared to Netflix's 16, the data supports the reputation of Disney+ as a family-centric service. This remains true even with the inclusion of major action franchises. The effect size of 0.7582 emphasizes that this is a defining characteristic of the platform's library.
+
+Second, the analysis revealed a statistically significant difference in quality scores. Disney+ movies tend to receive higher Rotten Tomatoes scores than Netflix movies. This might be attributed to Disney’s strategy of curated, high-budget franchises compared to Netflix’s "volume-heavy" approach.
+
+\subsection{Limitations and Outlook}
+A primary limitation of this study is the high percentage of missing age data (44\%). If missingness is not random (e.g., if obscure, low-quality movies are less likely to have recorded ratings), this could bias the results. Future research should incorporate genre analysis to see if the quality difference persists within specific categories (e.g., Animation vs. Drama).
+
+In conclusion, the analysis confirms that while Netflix offers a broader, more mature library, Disney+ offers a more curated, family-friendly collection of higher average quality.
+
+\subsection{Data Science Reflection}
+From a data science perspective, this project demonstrates the importance of choosing methods aligned with data characteristics rather than defaulting to parametric assumptions. The strong deviation from normality highlights why exploratory data analysis and diagnostic testing are essential before model selection. Additionally, reporting effect sizes alongside p-values ensures that statistical significance is interpreted in a practically meaningful way, which is critical in applied data-driven decision-making.
+
+\newpage
+
+% ==============================================================================
+% BIBLIOGRAPHY (Does not count toward page limit)
+% ==============================================================================
+\begin{thebibliography}{}
+
+\bibitem[SHS Conferences, 2024]{shsconf2024}
+SHS Conferences. (2024). \textit{Analysis of Streaming Platform Behavior}. Retrieved from \url{https://www.shs-conferences.org/articles/shsconf/abs/2024/27/shsconf_icdeba2024_01010/shsconf_icdeba2024_01010.html}
+
+\bibitem[JSTOR, n.d.]{jstor2331554}
+JSTOR. \textit{On the Statistical Properties of Rating Scales}. Retrieved from \url{https://www.jstor.org/stable/2331554}
+
+\bibitem[SSRN, 2024]{ssrn5275594}
+SSRN. (2024). \textit{Platform Strategies in the Streaming Era}. Retrieved from \url{https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5275594}
+
+\bibitem[Harris et al., 2020]{software}
+Harris, C.R., Millman, K.J., van der Walt, S.J., et al. (2020). \textit{Array programming with NumPy}. Nature; McKinney, W. (2010). \textit{Data Structures for Statistical Computing in Python}. Proceedings of the 9th Python in Science Conference.
+
+\end{thebibliography}
+
+
+
+\newpage
+
+% ==============================================================================
+% APPENDIX
+% ==============================================================================
+\section{Appendix}
+
+\subsection{Correlation Analysis}
+A Spearman correlation was conducted between Year, Age Rating, and Rotten Tomatoes Score. The results indicated a weak positive correlation between Release Year and Age Rating ($r = 0.27$), suggesting a slight trend toward more mature content over time. 
+\textit{This analysis helps illustrate whether newer movies tend to target older audiences, providing context for age distribution trends.}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{correlation_matrix.png}
+    \caption{Correlation Matrix of Numeric Variables.}
+    \label{fig:corr}
+\end{figure}
+
+\subsection{Platform Overlap}
+Out of the total 9,515 movies, 9,262 are exclusive to a single platform. Only 6 movies are shared between Disney+ and Netflix, ensuring that the samples used in the Mann-Whitney U tests are largely independent.
+
+\subsection{Statistical Formulas}
+\label{app:formulas}
+
+\subsubsection{Shapiro-Wilk Test}
+\begin{equation}
+W = \frac{(\sum_{i=1}^n a_i x_{(i)})^2}{\sum_{i=1}^n (x_i - \bar{x})^2}
+\end{equation}
+
+\subsubsection{Mann-Whitney U Statistic}
+\begin{equation}
+U_1 = R_1 - \frac{n_1(n_1+1)}{2}
+\end{equation}
+
+\subsubsection{Rank-Biserial Correlation}
+\begin{equation}
+r_{rb} = 1 - \frac{2U}{n_1 n_2}
+\end{equation}
+
+\subsection{Code and Reproducibility}
+All analysis code, data preprocessing scripts, and Jupyter/Colab notebooks are available online for reproducibility:
+\begin{itemize}
+    \item GitHub Repository: \url{https://github.com/MustafaUsman1/Streaming-Comparison-How-Disney-and-Netflix-Differ-in-Age-Ratings-and-Quality}
+    \item Google Colab Notebook: \url{https://colab.research.google.com/drive/1-m3j7AeJbR0bNdLEmAf_XlYCBXoyXbeu?usp=sharing}
+\end{itemize}
+
+
+\end{document}
