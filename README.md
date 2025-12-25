@@ -50,31 +50,7 @@ The violin plots illustrate the "density" of content. Netflix has a heavy concen
 Exploring the relationship between the year of release, maturity, and ratings.
 ![Correlation Matrix](figures/correlation_matrix.png)
 
-## 🚀 Getting Started
 
-### Prerequisites
-*   Python 3.8+
-*   `pandas`, `numpy`, `matplotlib`, `seaborn`, `scipy`
-
-### Installation
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/streaming-platform-analysis.git
-   ```
-2. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-3. Run the analysis:
-   ```bash
-   python analysis_script.py
-   ```
-
-## 📂 Repository Structure
-*   `analysis_script.py`: Full Python pipeline for cleaning, testing, and plotting.
-*   `Application_Report.pdf`: The final 10-page academic report (LaTeX).
-*   `figures/`: Generated PNG visualizations.
-*   `data/`: Contains the raw CSV (or instructions to download from Kaggle).
 
 ## 🎓 Academic Context
 This project follows the strict guidelines of the **Department of Statistics at TU Dortmund**. It emphasizes:
